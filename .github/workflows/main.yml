@@ -1,0 +1,31 @@
+name: Python Build and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Python program
+        run: python main.py
+
+      - name: Test Python program
+        run: |
+          python -c "from main import add_numbers; assert add_numbers(10, 20) == 30; print('Test passed!')"
